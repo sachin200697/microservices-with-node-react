@@ -1,0 +1,18 @@
+apiVersion: apps/v1 #in apps/v1 directory Deployment is present
+kind: Deployment
+metadata:
+  name: posts-depl
+spec:
+  replicas: 1
+  selector: #selector and templatte->matadata works together, selector is to tell Deployment which pods it need to manage
+    matchLabels:
+      app: posts #it can be like: myApp: posts (means any key value pair)
+  template:
+    metadata: #it is the config apply to pod means pod will be give a label as app->posts
+      labels:
+        app: posts
+    spec: #tell specification of a pod
+      containers:
+        - name: posts
+          #image: sachin200697/posts:0.0.1
+          image: sachin200697/posts

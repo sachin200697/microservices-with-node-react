@@ -21,7 +21,7 @@ can use set mynumber 2 to set a mynumber in redis and to get it: get mynumber.
 
 But in docker container we can run it like this: #> docker run redis
 
-if we open a send terminal and try to run redis-cli then it will not work
+if we open a second terminal and try to run redis-cli then it will not work
 because redis is running inside a container and if we open the new terminal then
 it is not in that container, so we can not use redis-cli.
 
@@ -30,7 +30,11 @@ To solve it we can run below command for an already running container:
 #> docker exec -it <container-id> <command> //exec is to run another command and
 it is to provide a direct input to the container.
 
-ex: #> docker run redis #> docker exec -it <container-id> redis-cli
+ex:
+
+#> docker run redis
+
+#> docker exec -it <container-id> redis-cli
 
 -it flag is made of two flags:
 
