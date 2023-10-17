@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-srv
+spec:
+  ingressClassName: nginx #this will tell ingress that we are providing a config file
+  #for routing and mapping to different services
+  rules:
+    - host: posts.com #we might host many applications using kubernates, so this
+      #host property is to tell that this config file is for posts.com app
+      #it means to access the posts service, instead of using localhost we need to
+      #use posts.com
+      #but to use posts.com (to tell that posts.com is equal to localhost) we
+      #need to do some configuration to our hosts file:
+      #  C:\Windows\System32\drivers\etc\hosts
+      # add line : "127.0.0.1 posts.com"  to above file
+      # in case of minikube instaed of 127.0.0.1 use minikube ip
+      http:
+        paths:
+          - path: /posts #for this path we want to send the requests to posts-clusterip-srv
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: posts-clusterip-srv #name of posts service
+                port:
+                  number: 9000 #port of posts service

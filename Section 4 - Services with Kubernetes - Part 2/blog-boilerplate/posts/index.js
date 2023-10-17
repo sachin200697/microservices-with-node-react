@@ -22,7 +22,7 @@ app.post('/posts', async (req, res) => {
 	};
 
 	await axios
-		.post('http://localhost:9005/events', {
+		.post('http://event-bus-srv:9005/events', {
 			type: 'PostCreated',
 			data: {
 				id,
@@ -36,6 +36,7 @@ app.post('/posts', async (req, res) => {
 });
 
 app.post('/events', (req, res) => {
+	console.log('event received by posts service', req.body.data);
 	res.send(req.body.data);
 });
 

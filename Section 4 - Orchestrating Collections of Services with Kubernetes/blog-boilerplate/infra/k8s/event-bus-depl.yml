@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: event-bus-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: event-bus
+  template:
+    metadata:
+      labels:
+        app: event-bus
+    spec:
+      containers:
+        - name: event-bus
+          image: sachin200697/event-bus
+#we can write different objects by seprating them by ---
+#below code is to create a service like posts-srv.yml file
+#we can either use same depl file or can create a separate file
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: event-bus-srv
+spec:
+  selector:
+    app: event-bus
+  type: ClusterIP #it is optional because default type is ClusterIP
+  ports:
+    - name: event-bus
+      protocol: TCP
+      port: 9005
+      targetPort: 9005

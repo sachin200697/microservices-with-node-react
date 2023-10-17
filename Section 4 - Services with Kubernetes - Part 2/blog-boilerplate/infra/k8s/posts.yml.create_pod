@@ -1,0 +1,10 @@
+apiVersion: v1 #v1 gives a list of predefined objects to use like Pod
+kind: Pod #Pod is the object provided by apiVersion v1
+metadata:
+  name: posts #it is the name of pod
+spec:
+  containers:
+    - name: posts
+      # - is used to create an array, in this case make array of 1 element
+      # we are giving a name posts to the container
+      image: sachin200697/posts:0.0.1 #specify which image to using to create container

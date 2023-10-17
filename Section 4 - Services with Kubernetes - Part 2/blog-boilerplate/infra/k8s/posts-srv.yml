@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: posts-srv
+spec:
+  type: NodePort #tell which type of service we are going to create
+  selector:
+    app: posts #this directly connected to template tag of posts-depl.yml
+    #means this service is belongs to the pods of app: posts
+    #it is similar to the class element of html, means all pods having app: posts, they
+    #will be included in this service
+  ports: #it is an array of ports the we going to expose
+    - name: posts #it can be different from posts, as it is only for loging purpose
+      protocol: TCP
+      port: 9000 #this is the port of our Node, we can change it
+      targetPort: 9000 #this is the port on which out posts service is listening
+      #to get this we can go to post folder and to index.js
+      #it always be same
