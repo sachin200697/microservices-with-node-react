@@ -2,6 +2,8 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ingress-srv
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: 'true' #with this annotation
 spec:
   ingressClassName: nginx #this will tell ingress that we are providing a config file
   #for routing and mapping to different services
@@ -17,10 +19,32 @@ spec:
       # in case of minikube instaed of 127.0.0.1 use minikube ip
       http:
         paths:
-          - path: /posts #for this path we want to send the requests to posts-clusterip-srv
+          - path: /posts/create #for this path we want to send the requests to posts-clusterip-srv
             pathType: ImplementationSpecific
             backend:
               service:
                 name: posts-clusterip-srv #name of posts service
                 port:
                   number: 9000 #port of posts service
+          - path: /posts
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: query-srv
+                port:
+                  number: 9002
+          - path: /posts/?(.*)/comments #infress does not support wildcard thing, so need to give a regular expression
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: comments-srv
+                port:
+                  number: 9001
+          - path: /?(.*) #for the home page after / there can be anything so it support all things
+            # because it is least significant so it sould come at last
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: client-srv
+                port:
+                  number: 3000

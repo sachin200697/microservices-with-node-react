@@ -123,3 +123,44 @@ eg:
 
           - path: /posts/?(.*)/comments
             pathType: ImplementationSpecific
+
+## Important Note to Add Environment Variable
+
+we are going to show the deployment of the React app to our Kubernetes cluster.
+The React app will be running in a Docker container.
+
+Unfortunately, create-react-app currently has two bugs that prevent it from
+running correctly in a docker container:
+
+https://github.com/facebook/create-react-app/issues/8688
+
+https://github.com/facebook/create-react-app/issues/11779 To solve this, we have
+to add two environment variables to the Dockerfile in the client folder. Find
+the Dockerfile in the client folder and make the following change:
+
+Docekr file:
+
+FROM node:alpine
+
+// Add the following lines
+
+ENV CI=true
+
+ENV WDS_SOCKET_PORT=0
+
+# Change client app to request to posts.com instead of localhost:port
+
+Because ingress cretaed a pod that will handle outside request and inside
+request mapping, and we configure ingress to handle request at posts.com, so now
+we need to change our UI to alwasy make request to posts.com
+
+## Unique Route Path
+
+Because ingress does not know about the post, get, and other methods, so we need
+to make these routes unique to tell the ingress how to route them.
+
+So need to change it in posts, client and the map the rulles in ingress yml file
+
+## How do I set up a Kubernetes Ingress rule with a regex path?
+
+https://stackoverflow.com/questions/40009640/how-do-i-set-up-a-kubernetes-ingress-rule-with-a-regex-path

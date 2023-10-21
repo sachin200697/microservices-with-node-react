@@ -9,11 +9,14 @@ const posts = {};
 app.use(express.json());
 app.use(cors());
 
+//we don't have to make it unique because we are not use it
 app.get('/posts', (req, res) => {
 	res.send(posts);
 });
 
-app.post('/posts', async (req, res) => {
+// app.post('/posts', async (req, res) => {
+// need to add /create to make it unique from query service for ingress
+app.post('/posts/create', async (req, res) => {
 	const id = randomBytes(4).toString('hex');
 	const { title } = req.body;
 	posts[id] = {
