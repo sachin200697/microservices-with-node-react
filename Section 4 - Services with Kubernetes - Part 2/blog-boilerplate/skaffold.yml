@@ -1,0 +1,63 @@
+apiVersion: skaffold/v2alpha3
+kind: Config
+deploy:
+  kubectl: #this is to tell skaffold to manage all files inside a folder
+    manifests:
+      - ./infra/k8s/* #mention the folder path to manage
+build:
+  local:
+    push: false #don't want to push the images to docker hub
+  artifacts: #we are telling skaffold that it needs to maintain below things
+    - image: sachin200697/client
+      context: client #some pod is running from our client service(it is name of the folder)
+      #if something changes in above mention dir(in this case client) then skaffold will take
+      #those changes and update our pod
+      docker:
+        dockerfile: Dockerfile
+      sync: #this is to tell that is something changes in the below mention directory
+        #then directly throw it inside dest folder
+        manual:
+          - src: 'src/**/*.js' #here mentioning the folder where we might to changes
+            #but if anything other that above mention folder change then skaffold will
+            #create entire image
+            dest: . #mentioning the destination (if src files changes then directly copy those files into dest )
+    - image: sachin200697/comments
+      context: comments
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.js'
+            dest: .
+    - image: sachin200697/event-bus
+      context: event-bus
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.js'
+            dest: .
+    - image: sachin200697/posts
+      context: posts
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.js'
+            dest: .
+    - image: sachin200697/moderation
+      context: moderation
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.js'
+            dest: .
+    - image: sachin200697/query
+      context: query
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.js'
+            dest: .

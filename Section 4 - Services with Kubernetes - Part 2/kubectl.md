@@ -1,4 +1,4 @@
-## communication b/w different services
+# communication b/w different services
 
 To achieve it we need to use ClusterIP service.
 
@@ -53,7 +53,7 @@ then try to build the docker images, push to them docker hub, etc..
 
 kubectl apply -f .
 
-## ingress nginx intallation
+# ingress nginx intallation
 
 https://kubernetes.github.io/ingress-nginx/deploy/#quick-start
 
@@ -148,7 +148,7 @@ ENV CI=true
 
 ENV WDS_SOCKET_PORT=0
 
-# Change client app to request to posts.com instead of localhost:port
+## Change client app to request to posts.com instead of localhost:port
 
 Because ingress cretaed a pod that will handle outside request and inside
 request mapping, and we configure ingress to handle request at posts.com, so now
@@ -164,3 +164,24 @@ So need to change it in posts, client and the map the rulles in ingress yml file
 ## How do I set up a Kubernetes Ingress rule with a regex path?
 
 https://stackoverflow.com/questions/40009640/how-do-i-set-up-a-kubernetes-ingress-rule-with-a-regex-path
+
+# Skaffold
+
+Write a skaffold.yml file and then run it using command(in the directory where
+this file exists): skaffold dev
+
+This command will return the API versions that are supported by the version of
+Skaffold you have installed: skaffold schema list
+
+That said, some students may want to upgrade their skaffold config. There is a
+very easy way to do this by just running skaffold fix from your terminal:
+skaffold fix
+
+Note: skaffold detects changes in the directories the we mention in skaffold.yml
+file and rebuild the images. But if we are not use something like nodemon for
+backend and create-react-app for react application then changes will not reflect
+in the running application because nodemon and create-react-app automatically
+detects changes and rerun them.
+
+Sometimes skaffold may not detect the changes, to fix it we shall learn in other
+lectures.

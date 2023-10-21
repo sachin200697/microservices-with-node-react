@@ -20,7 +20,7 @@ export default function PostCreate(props) {
 		<div>
 			<form onSubmit={onSubmit}>
 				<div>
-					<h3>Title</h3>
+					<h3>Title With Skaffold</h3>
 					<input
 						type='text'
 						value={title}
