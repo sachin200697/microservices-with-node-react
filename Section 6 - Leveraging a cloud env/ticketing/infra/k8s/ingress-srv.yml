@@ -1,0 +1,23 @@
+# Note: We also need to find our host file to point to ticket.dev
+# while accessing ticketing.dev from browser, we might get below error
+# Your connection is not private
+# To solve it client anywhere on the browser page then type: thisisunsage
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-service
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: 'true'
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: ticketing.dev
+      http:
+        paths:
+          - path: /api/users/?(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: auth-srv
+                port:
+                  number: 3000
