@@ -8,4 +8,4 @@ https://cloud.google.com/free
 2. Select Project
 3. Menu-> Kubernates Engine -> Clusters -> Enable
 4. Create cluster
-   1.
+   1. Give name ticketing-dev

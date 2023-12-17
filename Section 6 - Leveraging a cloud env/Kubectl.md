@@ -100,3 +100,18 @@ https://techoverflow.net/2019/04/01/how-to-fix-kubectl-unable-to-connect-to-the-
 https://stackoverflow.com/questions/74718494/i-cant-access-my-github-raw-githubusercontent-com-files
 
 https://developers.google.com/speed/public-dns/docs/using#change_your_dns_servers_settings
+
+## Not able to see the cloud build history:
+
+1. gcloud container clusters get-credentials <cluster-name> --region=us-central1
+2. inside Cloud build history -> Settings -> Enable [Kubernetes engine, Compute
+   engine, Service account]
+3. Do some changes in code file
+4. run: skaffold dev again
+
+## Deleting google cloud cluster
+
+Because it we run the cluster then it will charge for it, so it is better to
+delete the cluster if not using it.
+
+Console -> Project -> Kuberenetes Engine -> Clusters -> delete
